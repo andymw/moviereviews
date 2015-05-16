@@ -1,0 +1,55 @@
+%&moviereviews
+
+\input{hyphenation}
+
+\begin{document}
+
+% Title Section
+\twocolumn[%
+  \begin{center}%
+  {\LARGE\bf\textit{Kinob\"uchlein}\\}%
+  {\Large``Little Movie Book''\\}%
+  {\large Edited by Drew Weymouth\\}%
+  {\small\today\ --- \total{moviecount} entries}%
+  \end{center}%
+  \vspace{2em}%
+]
+
+\section{Ratings Index}
+\begin{tabular}{ll}
+  \fourplus & Masterpiece \numfilms{fourplus}\\
+  \four & Excellent \numfilms{four}\\
+  \threehalf & Very good \numfilms{threehalf}\\
+  \three & Good \numfilms{three}\\
+  \twohalf & Average \numfilms{twohalf}\\
+  \two & Fair \numfilms{two}\\
+  \onehalf & Poor \numfilms{onehalf}\\
+  \one & Bad \numfilms{one}\\
+  \half & Awful \numfilms{half}
+\end{tabular}
+
+\section{Contributors}
+\begin{tabular}{ll}
+  \textbf{DW} & Drew Weymouth\\
+  \textbf{AW} & Andy M. Wang\\
+  \textbf{JDT} & Joseph Triska
+\end{tabular}
+
+\vspace{2em}
+
+\input{reviews/1}
+\foreach \l in {A,...,Z}{\includefile{\l}}
+
+\newpage
+\section{Index of Stars}
+\textit{Included in this list are actors who have a starring role in at least two films reviewed in this document, and their respective films in chronological order by release year.}
+
+\input{stars}
+
+\newpage
+\section{Index of Directors}
+\textit{Included in this list are directors who have at least two films reviewed in this document, and their respective films in chronological order by release year.}
+
+\input{directors}
+
+\end{document}

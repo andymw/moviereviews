@@ -1,0 +1,82 @@
+\documentclass[twocolumn]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{fancyhdr,pgffor,ifthen,microtype,times,totcount,xstring,xfrac}
+\usepackage[T1]{fontenc}
+\usepackage[all]{nowidow}
+
+% The Ratings - use these commands to give each film a rating
+\newcommand\fourplus{\stars{4}+\ \stepcounter{fourplus}}
+\newcommand\four{\stars{4}\ \stepcounter{four}}
+\newcommand\threehalf{\stars{3}\textonehalf\ \stepcounter{threehalf}}
+\newcommand\three{\stars{3}\ \stepcounter{three}}
+\newcommand\twohalf{\stars{2}\textonehalf\ \stepcounter{twohalf}}
+\newcommand\two{\stars{2}\ \stepcounter{two}}
+\newcommand\onehalf{\stars{1}\textonehalf\ \stepcounter{onehalf}}
+\newcommand\one{\stars{1}\ \stepcounter{one}}
+\newcommand\half{\textonehalf\ \stepcounter{half}}
+
+% Movie Review Header
+% Usage: \movie{Title}{Year}{Running time}{\rating}
+\newcommand\movie[4]{\textbf{#1} (#2) #3. #4\stepcounter{moviecount}}
+% Film Director(s) (multiple separated by semicolons)
+\newcommand\dir[1]{D: \semitocomma{#1}.}
+% Principal Cast Members, separated by semicolons
+\newcommand\cast[1]{\semitocomma{#1}.}
+% MPAA Rating
+\newcommand\mpaa[1]{\dashtoubdash{[#1]}}
+% Review author
+\renewcommand\author[1]{\textit{#1}}
+% Superscript ordinal th
+\renewcommand\th{\textsuperscript{th}}
+% Superscript ordinal st
+\newcommand\st{\textsuperscript{st}}
+% Directors/Stars Index entry
+\newcommand\indexentry[2]{\textbf{#1: }#2\\}
+
+% Replace semicolons with commas
+% http://tex.stackexchange.com/questions/8619/replacing-a-substring
+\def\semitocomma#1{%
+	\IfSubStr{#1}{;}{%
+		\StrSubstitute{#1}{;}{,}}{#1}}
+% Replace dashes to unbreakable dashes
+\def\dashtoubdash#1{%
+	\IfSubStr{#1}{-}{%
+		\StrSubstitute{#1}{-}{\mbox{-}}}{#1}}
+
+% http://tex.stackexchange.com/questions/32597/vertically-centered-horizontal-rule-filling-the-rest-of-a-line
+\def\Vhrulefill{\leavevmode\leaders\hrule height 0.9ex depth \dimexpr0.5pt-0.9ex\hfill\kern0pt}
+
+\newcommand\stars[1]{\foreach \i in {1,...,#1}{{\large$\star$}}}
+\newcommand\numfilms[1]{\small (\total{#1} \ifthenelse{\totvalue{#1}=1}{film}{films})}
+
+% Counters for ratings - start at -1 because they are used once in ratings index
+\newcounter{fourplus}\regtotcounter{fourplus}\setcounter{fourplus}{-1}
+\newcounter{four}\regtotcounter{four}\setcounter{four}{-1}
+\newcounter{threehalf}\regtotcounter{threehalf}\setcounter{threehalf}{-1}
+\newcounter{three}\regtotcounter{three}\setcounter{three}{-1}
+\newcounter{twohalf}\regtotcounter{twohalf}\setcounter{twohalf}{-1}
+\newcounter{two}\regtotcounter{two}\setcounter{two}{-1}
+\newcounter{onehalf}\regtotcounter{onehalf}\setcounter{onehalf}{-1}
+\newcounter{one}\regtotcounter{one}\setcounter{one}{-1}
+\newcounter{half}\regtotcounter{half}\setcounter{half}{-1}
+
+\newcounter{moviecount}\regtotcounter{moviecount}
+\newcounter{index} % for forLoop
+
+\renewcommand\section[1]{\vspace{2em plus 0.5em minus 0.5em}\centerline{\sf\large#1}}
+\newcommand\letter[1]{\par\vspace{1em}\Vhrulefill{\Large\sf\ #1 }\Vhrulefill\par}
+\newcommand\includefile[1]{\IfFileExists{reviews/#1}{\letter{#1}\input{reviews/#1}}{}}
+
+\setlength{\parindent}{0em}
+\setlength{\parskip}{0.5em plus 0.1em minus 0.1em}
+
+% Page numbers in footer, not first page
+\pagestyle{fancy}
+\renewcommand\headrulewidth{0pt}
+\fancyfoot[C]{\ifthenelse{\thepage=1}{}{-- \thepage\ --}}
+
+\pdfinfo{
+  /Author (Drew Weymouth)
+  /Title (Little Movie Book)
+  /Subject (Film)
+}
