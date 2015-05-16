@@ -1,0 +1,18 @@
+# LaTeX
+*.aux
+*.synctex.gz
+*.fdb_latexmk
+*.fls
+*.out
+*.fmt
+*.log
+
+# PDFs
+*.pdf
+
+# Java
+*.class
+
+# specifics
+directors.tex
+stars.tex
